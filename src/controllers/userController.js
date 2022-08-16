@@ -16,6 +16,7 @@ const controller = {
 
             return response.status(200).json(user)
         } catch (error) {
+            console.log(error);
             return responseError(error, response);
         }
     }

@@ -11,6 +11,7 @@ const controller = {
 
             return response.json(session);
         } catch (error) {
+            console.log(error);
             return responseError(error);
         }
     }
