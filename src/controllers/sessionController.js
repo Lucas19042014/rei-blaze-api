@@ -9,10 +9,10 @@ const controller = {
             const { email, password } = request.body;
             const session = await sessionService.createSession({ email, password });
 
-            return response.json(session);
+            return response.status(201).json(session);
         } catch (error) {
             console.log(error);
-            return responseError(error);
+            return responseError(error, response);
         }
     }
 }

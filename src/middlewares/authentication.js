@@ -5,14 +5,13 @@ const customerRepository = require('../database/repositories/customerRepository'
 const AuthenticationError = require('../exceptions/AuthorizationError');
 
 const ensureAuthenticated = async (request, response, next) => {
-    const authorizationToken = request.headers.authorization;
-    if (!authorizationToken) {
-        throw new AuthenticationError('Authorization Token not found');
-    }
-
-    const [, token] = authorizationToken.split(' ');
-
     try {
+        const authorizationToken = request.headers.authorization;
+        if (!authorizationToken) {
+            throw new Error('Authorization Token not found');
+        }
+
+        const [, token] = authorizationToken.split(' ');
         const { sub } = jwt.verify(token, config.jwt.secretKey);
         
         const authToken = await customerAuthTokenRepository.findOneByToken({ token });
@@ -25,6 +24,7 @@ const ensureAuthenticated = async (request, response, next) => {
 
         return next();
     } catch (error) {
+        console.log(error);
         throw new AuthenticationError('Invalid Authorization Token');
     }
 }

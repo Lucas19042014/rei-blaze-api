@@ -32,7 +32,16 @@ const findAll = async () => {
 }
 
 const save = async (user) => {
-    return knex('customer_user').insert(user);
+    const result = await knex('customer_user').insert(user).returning('id');
+    return result?.at(0).id;
+}
+
+const update = async (user, transaction) => {
+    let queryBuilder = knex('customer_user');
+    if (transaction)
+        queryBuilder = queryBuilder.transacting(transaction);
+    
+    return queryBuilder.where({ id: user.id }).update(user);
 }
 
 module.exports = {
@@ -40,5 +49,6 @@ module.exports = {
     findById,
     findByUuid,
     findByEmail,
+    update,
     save
 }
