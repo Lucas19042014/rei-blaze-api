@@ -35,10 +35,17 @@ const save = async (user) => {
     return knex('customer_user').insert(user);
 }
 
+const update = async (user) => {
+    return knex('customer_user')
+        .where({ id: user.id })
+        .update(user);
+}
+
 module.exports = {
     findAll,
     findById,
     findByUuid,
     findByEmail,
-    save
+    save,
+    update
 }

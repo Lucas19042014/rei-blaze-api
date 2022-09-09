@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 const sessionRoutes = require('./src/routes/session');
 const userRoutes = require('./src/routes/users');
+const webhookRoutes = require('./src/routes/webhook');
 const errorUtils = require('./src/utils/errorUtils');
 
 const port = process.env.NODE_PORT || 3000;
@@ -15,6 +16,7 @@ const port = process.env.NODE_PORT || 3000;
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(webhookRoutes);
 app.use(sessionRoutes);
 app.use(userRoutes);
 

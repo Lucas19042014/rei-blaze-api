@@ -38,9 +38,12 @@ const createSession = async (sessionDTO) => {
         customer_id: user.id,
     });
 
+    delete user.password;
+
     return {
         token,
         expireAt: new Date(Date.now() + (60 * 60 * 24 * 1000)),
+        user
     }
 }
 
